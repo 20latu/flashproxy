@@ -1,0 +1,32 @@
+{
+  "name": "flashproxy",
+  "version": "1.1.0",
+  "description": "Flash proxies are a new way of providing access to a censorship circumvention system such as Tor. A flash proxy is a miniature proxy that runs in a web browser. It checks for clients that need access, then conveys data between them and a Tor relay.",
+  "main": "flashproxy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node flashproxy-node.js"
+  },
+  "bin": {
+    "flashproxy": "flashproxy-node.js"
+  },
+  "dependencies": {
+    "xmlhttprequest": "1.5.0",
+    "ws": "git://github.com/einaros/ws#02b12c184"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.torproject.org/flashproxy.git"
+  },
+  "keywords": [
+    "flashproxy",
+    "tor",
+    "bridge",
+    "relay",
+    "websocket",
+    "pluggable transport"
+  ],
+  "author": "David Fifield",
+  "license": "MIT",
+  "readmeFilename": "README"
+}
