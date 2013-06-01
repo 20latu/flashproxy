@@ -94,18 +94,20 @@ if (DEBUG) {
 }
 
 function puts(s) {
-    if (debug_div) {
-        var at_bottom;
-
+    if (DEBUG) {
         /* This shows up in the Web Console in Firefox and F12 developer tools
            in Internet Explorer. */
         (console.debug || console.log).call(console, s);
 
-        /* http://www.w3.org/TR/cssom-view/#element-scrolling-members */
-        at_bottom = (debug_div.scrollTop + debug_div.clientHeight === debug_div.scrollHeight);
-        debug_div.appendChild(document.createTextNode(s + "\n"));
-        if (at_bottom)
-            debug_div.scrollTop = debug_div.scrollHeight;
+        if (debug_div) {
+            var at_bottom;
+
+            /* http://www.w3.org/TR/cssom-view/#element-scrolling-members */
+            at_bottom = (debug_div.scrollTop + debug_div.clientHeight === debug_div.scrollHeight);
+            debug_div.appendChild(document.createTextNode(s + "\n"));
+            if (at_bottom)
+                debug_div.scrollTop = debug_div.scrollHeight;
+        }
     }
 }
 
@@ -456,13 +458,14 @@ function make_websocket(addr) {
 }
 
 function FlashProxy() {
-    if (DEBUG) {
-        this.badge_elem = debug_div;
-    } else {
-        this.badge = new Badge();
-        this.badge_elem = this.badge.elem;
+    this.badge_elem = debug_div;
+    if (this.badge_elem) {
+      if (!DEBUG) {
+          this.badge = new Badge();
+          this.badge_elem = this.badge.elem;
+      }
+      this.badge_elem.setAttribute("id", "flashproxy-badge");
     }
-    this.badge_elem.setAttribute("id", "flashproxy-badge");
 
     this.proxy_pairs = [];
 
@@ -1077,13 +1080,15 @@ function flashproxy_badge_insert() {
     if (flashproxy_should_disable())
         fp.disable();
 
-    /* http://intertwingly.net/blog/2006/11/10/Thats-Not-Write for this trick to
-       insert right after the <script> element in the DOM. */
-    e = document.body;
-    while (e.lastChild && e.lastChild.nodeType === 1) {
-        e = e.lastChild;
+    if (fp.badge_elem) {
+        /* http://intertwingly.net/blog/2006/11/10/Thats-Not-Write for this
+           trick to insert right after the <script> element in the DOM. */
+        e = document.body;
+        while (e.lastChild && e.lastChild.nodeType === 1) {
+            e = e.lastChild;
+        }
+        e.parentNode.appendChild(fp.badge_elem);
     }
-    e.parentNode.appendChild(fp.badge_elem);
 
     return fp;
 }
