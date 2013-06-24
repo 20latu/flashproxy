@@ -26,7 +26,6 @@
     "websocket",
     "pluggable transport"
   ],
-  "author": "David Fifield",
   "license": "MIT",
   "readmeFilename": "README"
 }
