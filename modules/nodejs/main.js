@@ -20,8 +20,5 @@ var file = path.join(__dirname, "flashproxy.js");
 var data = fs.readFileSync(file, "utf8");
 eval(data);
 
-// Remove debug_div
-debug_div = null;
-
 // Start 'er up
 flashproxy_badge_new().start();

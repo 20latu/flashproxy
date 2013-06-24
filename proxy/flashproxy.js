@@ -84,11 +84,11 @@ var OPT_IN_COOKIE = "flashproxy-allow";
 var WebSocket = window.WebSocket || window.MozWebSocket;
 
 var query = parse_query_string(window.location.search.substr(1));
-var cookies = parse_cookie_string(document.cookie);
 var DEBUG = get_param_boolean(query, "debug", false);
 var debug_div;
 /* HEADLESS is true if we are running not in a browser with a DOM. */
 var HEADLESS = typeof(document) === "undefined";
+var cookies = HEADLESS ? {} : parse_cookie_string(document.cookie);
 
 if (DEBUG && !HEADLESS) {
     debug_div = document.createElement("pre");
