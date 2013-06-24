@@ -87,8 +87,10 @@ var query = parse_query_string(window.location.search.substr(1));
 var cookies = parse_cookie_string(document.cookie);
 var DEBUG = get_param_boolean(query, "debug", false);
 var debug_div;
+/* HEADLESS is true if we are running not in a browser with a DOM. */
+var HEADLESS = typeof(document) === "undefined";
 
-if (DEBUG) {
+if (DEBUG && !HEADLESS) {
     debug_div = document.createElement("pre");
     debug_div.className = "debug";
 }
@@ -458,13 +460,16 @@ function make_websocket(addr) {
 }
 
 function FlashProxy() {
-    if (DEBUG) {
+    if (HEADLESS) {
+        /* No badge. */
+    } else if (DEBUG) {
         this.badge_elem = debug_div;
     } else {
         this.badge = new Badge();
         this.badge_elem = this.badge.elem;
     }
-    this.badge_elem.setAttribute("id", "flashproxy-badge");
+    if (this.badge_elem)
+        this.badge_elem.setAttribute("id", "flashproxy-badge");
 
     this.proxy_pairs = [];
 
