@@ -1,6 +1,6 @@
 {
   "name": "flashproxy",
-  "version": "1.1.0",
+  "version": "1.1",
   "description": "Flash proxies are a new way of providing access to a censorship circumvention system such as Tor. A flash proxy is a miniature proxy that runs in a web browser. It checks for clients that need access, then conveys data between them and a Tor relay.",
   "main": "flashproxy.js",
   "scripts": {
